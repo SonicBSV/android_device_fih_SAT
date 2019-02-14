@@ -21,7 +21,7 @@
 # definition file).
 #
 
-DEVICE_PATH := device/sharp/SAT
+DEVICE_PATH := device/fih/SAT
 
 # Bootloader
 TARGET_BOOTLOADER_BOARD_NAME := sdm660
@@ -32,7 +32,7 @@ TARGET_BOOTANIMATION_PRELOAD := true
 TARGET_BOOTANIMATION_TEXTURE_CACHE := true
 
 # Platform
-BOARD_VENDOR := Sharp
+BOARD_VENDOR := FIH
 TARGET_BOARD_PLATFORM := sdm660
 TARGET_BOARD_PLATFORM_GPU := qcom-adreno508
 
@@ -61,7 +61,8 @@ TARGET_NO_RECOVERY := true
 TARGET_OTA_ASSERT_DEVICE := SAT,SH-Z01,SH-Z01_00E0
 
 # Kernel
-BOARD_KERNEL_CMDLINE := console=ttyMSM0,115200,n8 androidboot.console=ttyMSM0 earlycon=msm_serial_dm,0xc170000 androidboot.hardware=qcom msm_rtb.filter=0x37 ehci-hcd.park=3 lpm_levels.sleep_disabled=1 sched_enable_hmp=1 sched_enable_power_aware=1 service_locator.enable=1 swiotlb=1 androidboot.configfs=true androidboot.usbcontroller=a800000.dwc3 firmware_class.path=/vendor/firmware_mnt/image loop.max_part=7 androidboot.selinux=permissive
+BOARD_KERNEL_CMDLINE += console=ttyMSM0,115200,n8 androidboot.console=ttyMSM0 earlycon=msm_serial_dm,0xc170000 androidboot.hardware=qcom user_debug=31 msm_rtb.filter=0x37 ehci-hcd.park=3 lpm_levels.sleep_disabled=1 sched_enable_hmp=1 sched_enable_power_aware=1 service_locator.enable=1 swiotlb=1 androidboot.configfs=true androidboot.usbcontroller=a800000.dwc3
+BOARD_KERNEL_CMDLINE += androidboot.selinux=permissive
 BOARD_KERNEL_BASE        := 0x00000000
 BOARD_KERNEL_TAGS_OFFSET := 0x00000100
 BOARD_RAMDISK_OFFSET     := 0x01000000
@@ -69,7 +70,8 @@ BOARD_KERNEL_PAGESIZE := 4096
 TARGET_KERNEL_ARCH := arm64
 BOARD_KERNEL_IMAGE_NAME := Image.gz-dtb
 TARGET_KERNEL_CROSS_COMPILE_PREFIX := aarch64-linux-android-
-TARGET_KERNEL_SOURCE := kernel/sharp/sdm660
+#TARGET_KERNEL_SOURCE := kernel/sharp/sdm660
+TARGET_KERNEL_SOURCE := kernel/fih/SAT
 TARGET_KERNEL_CONFIG := SHARP-perf_defconfig
 
 
@@ -276,4 +278,4 @@ WIFI_DRIVER_OPERSTATE_PATH := "/sys/class/net/wlan0/operstate"
 WIFI_HIDL_FEATURE_AWARE := true
 
 # inherit from the proprietary version
--include vendor/sharp/SAT/BoardConfigVendor.mk
+-include vendor/fih/SAT/BoardConfigVendor.mk

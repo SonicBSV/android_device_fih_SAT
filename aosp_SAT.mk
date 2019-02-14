@@ -25,7 +25,7 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/core_64_bit.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
 
 # Inherit from SAT device
-$(call inherit-product, device/sharp/SAT/device.mk)
+$(call inherit-product, device/fih/SAT/device.mk)
 
 # Inherit some common PE stuff.
 $(call inherit-product, vendor/aosp/config/common_full_phone.mk)
@@ -34,19 +34,19 @@ $(call inherit-product, vendor/aosp/config/common_full_phone.mk)
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.aosp.build.vendor_security_patch=2018-10-01
 
-PRODUCT_BRAND := Sharp
+PRODUCT_BRAND := SHARP
 PRODUCT_DEVICE := SAT
 PRODUCT_MANUFACTURER := FIH
 PRODUCT_NAME := aosp_SAT
-PRODUCT_MODEL := Aquos S2
+PRODUCT_MODEL := SH-Z01
 
 PRODUCT_GMS_CLIENTID_BASE := android-hmd
 
-TARGET_VENDOR := Sharp
+TARGET_VENDOR := FIH
 
 PRODUCT_BUILD_PROP_OVERRIDES += \
     PRIVATE_BUILD_DESC="SH-Z01_00E0-user 8.0.0 OPR1.170623.027 00E0_2_140 release-keys" \
-    TARGET_DEVICE="SAT" \
+    PRODUCT_NAME=SAT \
     DEVICE_MAINTAINERS="SonicBSV"
     
 # Set BUILD_FINGERPRINT variable to be picked up by both system and vendor build.prop

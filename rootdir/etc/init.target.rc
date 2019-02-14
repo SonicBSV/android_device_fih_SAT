@@ -44,7 +44,6 @@ on init
 on fs
     wait /dev/block/platform/soc/${ro.boot.bootdevice}
     symlink /dev/block/platform/soc/${ro.boot.bootdevice} /dev/block/bootdevice
-    mkdir /BBSYS 0770 system system
     mount_all /vendor/etc/fstab.qcom
     swapon_all /vendor/etc/fstab.qcom
 
@@ -105,7 +104,6 @@ on boot
 
 #Load WLAN driver
    chown wifi wifi /sys/module/wlan/parameters/fwpath
-   insmod /vendor/lib/modules/qca_cld3/qca_cld3_wlan.ko
    setprop wlan.driver.status "ok"
 
 #remosaic Samsung 

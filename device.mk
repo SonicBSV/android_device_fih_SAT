@@ -21,7 +21,7 @@
 # definition file).
 #
 
-$(call inherit-product, vendor/sharp/SAT/SAT-vendor.mk)
+$(call inherit-product, vendor/fih/SAT/SAT-vendor.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/product_launched_with_n_mr1.mk)
 
 # Overlays
@@ -101,8 +101,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
     persist.vendor.qcomsysd.enabled=1 \
     rild.libpath=/system/vendor/lib64/libril-qc-qmi-1.so \
     persist.env.fastdorm.enabled=true \
-    persist.gsmapp.ezincall.video=false \
-    persist.sys.bbsys=on
+    persist.gsmapp.ezincall.video=false 
 
 # Haters gonna hate..
 PRODUCT_CHARACTERISTICS := nosdcard
@@ -112,10 +111,10 @@ AB_OTA_UPDATER := true
 
 
 AB_OTA_PARTITIONS += \
-    boot \
     system \
     vendor
-
+#    boot \
+    
 AB_OTA_POSTINSTALL_CONFIG += \
     RUN_POSTINSTALL_system=true \
     POSTINSTALL_PATH_system=system/bin/otapreopt_script \
@@ -177,14 +176,14 @@ PRODUCT_PACKAGES += \
     android.hardware.audio@2.0-service
 
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/audio/audio_effects.conf:$(TARGET_COPY_OUT_VENDOR)/etc/audio_effects.conf \
+    $(LOCAL_PATH)/audio/audio_effects.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_effects.xml \
     $(LOCAL_PATH)/audio/audio_output_policy.conf:$(TARGET_COPY_OUT_VENDOR)/etc/audio_output_policy.conf \
     $(LOCAL_PATH)/audio/audio_platform_info.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_platform_info.xml \
+    $(LOCAL_PATH)/audio/audio_platform_info_extcodec.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_platform_info_extcodec.xml \
     $(LOCAL_PATH)/audio/audio_tuning_mixer_tasha.txt:$(TARGET_COPY_OUT_VENDOR)/etc/audio_tuning_mixer_tasha.txt \
     $(LOCAL_PATH)/audio/graphite_ipc_platform_info.xml:$(TARGET_COPY_OUT_VENDOR)/etc/graphite_ipc_platform_info.xml \
     $(LOCAL_PATH)/audio/listen_platform_info.xml:$(TARGET_COPY_OUT_VENDOR)/etc/listen_platform_info.xml \
-    $(LOCAL_PATH)/audio/mixer_paths.xml:$(TARGET_COPY_OUT_VENDOR)/etc/mixer_paths.xml \
-    $(LOCAL_PATH)/audio/mixer_paths_mtp.xml:$(TARGET_COPY_OUT_VENDOR)/etc/mixer_paths_mtp.xml \
+    $(LOCAL_PATH)/audio/mixer_paths_wcd9335.xml:$(TARGET_COPY_OUT_VENDOR)/etc/mixer_paths_wcd9335.xml \
     $(LOCAL_PATH)/audio/sound_trigger_mixer_paths_wcd9335.xml:$(TARGET_COPY_OUT_VENDOR)/etc/sound_trigger_mixer_paths_wcd9335.xml \
     $(LOCAL_PATH)/audio/sound_trigger_platform_info.xml:$(TARGET_COPY_OUT_VENDOR)/etc/sound_trigger_platform_info.xml
 
@@ -251,7 +250,10 @@ PRODUCT_PROPERTY_OVERRIDES += \
     qcom.bluetooth.soc=cherokee \
     persist.bt.max.hs.connections=2 \
     persist.bt.max.a2dp.connections=2 \
-    persist.bt.enable.multicast=1
+    persist.bt.enable.multicast=1 \
+    ro.bt.bdaddr_path=/proc/bt_mac \
+    ro.bluetooth.emb_wp_mode=false \
+    ro.bluetooth.wipower=false 
     
 # Camera
 PRODUCT_PACKAGES += \
@@ -263,8 +265,11 @@ PRODUCT_PACKAGES += \
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.camera.switch.anim.delay=300 \
     ro.camera.record.anim.delay=200 \
-    persist.camera.HAL3.enabled=1
-
+    persist.camera.HAL3.enabled=1 \
+    vendor.camera.aux.packagelist=com.hmdglobal.camera2,cameratest,com.evenwell.fqc,com.tools.alt,com.siui.android.camera \
+    vendor.camera.aux.packagelist1=com.sharp.camera,org.codeaurora.snapcam,com.siui.faceunlock \
+    camera.aux.packagelist=net.sourceforge.opencamera,org.codeaurora.snapcam,com.fihtdc.fqc
+ 
 # Display
 PRODUCT_PACKAGES += \
     copybit.sdm660 \
@@ -303,12 +308,13 @@ PRODUCT_PROPERTY_OVERRIDES += \
     drm.service.enabled=true
     
 # Fingerprint feature
-PRODUCT_PACKAGES += \
+#PRODUCT_PACKAGES += \
     android.hardware.biometrics.fingerprint@2.1-service
 
 PRODUCT_COPY_FILES += \
-    frameworks/native/data/etc/android.hardware.fingerprint.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.fingerprint.xml
-
+    frameworks/native/data/etc/android.hardware.fingerprint.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.fingerprint.xml \
+    $(LOCAL_PATH)/configs/com.fingerprints.extension.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/com.fingerprints.extension.xml
+    
 # FM
 PRODUCT_PACKAGES += \
     FM2 \
@@ -501,8 +507,6 @@ PRODUCT_PACKAGES += \
     fqcaudioloopback.sh \
     headset_mic_to_headset_recv_off.sh \
     headset_mic_to_headset_recv_on.sh \
-    init.fih.preConfig.sh \
-    init.qcom.pre-cda.sh \
     init.sat.smartamp.sh \
     init.class_main.sh \
     init.crda.sh \
@@ -524,7 +528,6 @@ PRODUCT_PACKAGES += \
     init.qti.qseecomd.sh \
     qca6234-service.sh \
     fstab.qcom \
-    init.fih.elabel.rc \
     init.fingerprint.elan.rc \
     init.fingerprint.fpc.rc \
     init.nfc.nxp.rc \
@@ -532,7 +535,6 @@ PRODUCT_PACKAGES += \
     init.recovery.qcom.rc \
     init.recovery.qcom.usb.rc \
     init.qcom.battery.rc \
-    init.qcom.cda.rc \
     init.qcom.emmc.rc \
     init.qcom.fs.rc \
     init.qcom.lcm.rc \
@@ -547,6 +549,7 @@ PRODUCT_PACKAGES += \
     init.sat.poweroff_charging.rc \
     init.sat.smartamp.rc \
     init.SAT.target.rc \
+    init.SS2.target.rc \
     init.vibrator.rc \
     init.msm.usb.configfs.rc \
     init.qcom.factory.rc \

@@ -31,40 +31,6 @@ include $(call all-makefiles-under,$(LOCAL_PATH))
 
 include $(CLEAR_VARS)
 
-$(shell mkdir -p $(TARGET_OUT_VENDOR)/firmware; \
-    ln -sf /dev/block/bootdevice/by-name/msadp \
-        $(TARGET_OUT_VENDOR)/firmware/msadp)
-
-include $(call all-makefiles-under,$(LOCAL_PATH))
-
-BBSYS_MOUNT_POINT := $(TARGET_OUT_VENDOR)/BBSYS
-ELABEL_MOUNT_POINT := $(TARGET_OUT_VENDOR)/elabel
-SECUREFS_MOUNT_POINT := $(TARGET_OUT_VENDOR)/securefs
-HIDDEN_MOUNT_POINT := $(TARGET_OUT_VENDOR)/hidden
-CDA_MOUNT_POINT := $(TARGET_OUT_VENDOR)/hidden/data
-
-$(BBSYS_MOUNT_POINT):
-	@echo "Creating $(BBSYS_MOUNT_POINT)"
-	@mkdir -p $(TARGET_OUT_VENDOR)/BBSYS
-
-$(ELABEL_MOUNT_POINT):
-	@echo "Creating $(ELABEL_MOUNT_POINT)"
-	@mkdir -p $(TARGET_OUT_VENDOR)/elabel
-
-$(SECUREFS_MOUNT_POINT):
-	@echo "Creating $(SECUREFS_MOUNT_POINT)"
-	@mkdir -p $(TARGET_OUT_VENDOR)/securefs
-
-$(HIDDEN_MOUNT_POINT):
-	@echo "Creating $(HIDDEN_MOUNT_POINT)"
-	@mkdir -p $(TARGET_OUT_VENDOR)/hidden
-
-$(CDA_MOUNT_POINT):
-	@echo "Creating $(CDA_MOUNT_POINT)"
-	@mkdir -p $(TARGET_OUT_VENDOR)/hidden/data	
-
-ALL_DEFAULT_INSTALLED_MODULES += $(BBSYS_MOUNT_POINT) $(ELABEL_MOUNT_POINT) $(SECUREFS_MOUNT_POINT) $(HIDDEN_MOUNT_POINT) $(CDA_MOUNT_POINT)
-
 IMS_LIBS := libimscamera_jni.so libimsmedia_jni.so
 IMS_SYMLINKS := $(addprefix $(TARGET_OUT_VENDOR_APPS)/ims/lib/arm64/,$(notdir $(IMS_LIBS)))
 $(IMS_SYMLINKS): $(LOCAL_INSTALLED_MODULE)
@@ -74,6 +40,15 @@ $(IMS_SYMLINKS): $(LOCAL_INSTALLED_MODULE)
 	$(hide) ln -sf /system/lib64/$(notdir $@) $@
 
 ALL_DEFAULT_INSTALLED_MODULES += $(IMS_SYMLINKS)
+
+MSADP_SYMLINKS := $(TARGET_OUT_VENDOR)/firmware/msadp
+$(MSADP_SYMLINKS): $(LOCAL_INSTALLED_MODULE)
+	@echo "MSADP link: $@"
+	@mkdir -p $(dir $@)
+	@rm -rf $@
+	$(hide) ln -sf /dev/block/bootdevice/by-name/msadp $(dir $@)
+
+ALL_DEFAULT_INSTALLED_MODULES += $(MSADP_SYMLINKS)
 
 RFS_MSM_ADSP_SYMLINKS := $(TARGET_OUT_VENDOR)/rfs/msm/adsp/
 $(RFS_MSM_ADSP_SYMLINKS): $(LOCAL_INSTALLED_MODULE)
