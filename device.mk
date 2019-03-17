@@ -588,6 +588,201 @@ PRODUCT_PROPERTY_OVERRIDES += \
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/sensors/hals.conf:$(TARGET_COPY_OUT_VENDOR)/etc/sensors/hals.conf
 
+# System_prop
+PRODUCT_PROPERTY_OVERRIDES += \
+rild.libpath=/system/vendor/lib64/libril-qc-qmi-1.so \
+persist.rild.nitz_plmn="" \
+persist.rild.nitz_long_ons_0="" \
+persist.rild.nitz_long_ons_1="" \
+persist.rild.nitz_long_ons_2="" \
+persist.rild.nitz_long_ons_3="" \
+persist.rild.nitz_short_ons_0="" \
+persist.rild.nitz_short_ons_1="" \
+persist.rild.nitz_short_ons_2="" \
+persist.rild.nitz_short_ons_3="" \
+ril.subscription.types=NV,RUIM \
+DEVICE_PROVISIONED=1
+
+#
+# Set network mode to (T/L/G/W/1X/EVDO, T/G/W/L) for 7+5 mode device on DSDS mode
+#
+PRODUCT_PROPERTY_OVERRIDES += \
+ro.telephony.default_network=22,20 \
+debug.sf.recomputecrop=0 \
+debug.sf.enable_hwc_vds=1 \
+debug.sf.hw=1 \
+debug.sf.latch_unsignaled=1 \
+debug.gralloc.enable_fb_ubwc=1 \
+dalvik.vm.heapsize=36m \
+dev.pm.dyn_samplingrate=1 \
+persist.demo.hdmirotationlock=false
+
+# system props for the cne module
+#
+PRODUCT_PROPERTY_OVERRIDES += \
+persist.cne.feature=1
+
+#system props for the MM modules
+PRODUCT_PROPERTY_OVERRIDES += \
+media.stagefright.enable-player=true \
+media.stagefright.enable-http=true \
+media.stagefright.enable-aac=true \
+media.stagefright.enable-qcp=true \
+media.stagefright.enable-scan=true \
+mmp.enable.3g2=true \
+media.aac_51_output_enabled=true \
+mm.enable.smoothstreaming=true
+
+#codecs:(PARSER_)AAC AC3 AMR_NB AMR_WB ASF AVI DTS FLV 3G2 MP2PS MP2TS OGG QCP WAV FLAC AIFF APE DSD
+PRODUCT_PROPERTY_OVERRIDES += \
+mm.enable.qcom_parser=13622015 \
+persist.mm.enable.prefetch=true
+
+#property to enable narrow search range for video encoding
+PRODUCT_PROPERTY_OVERRIDES += \
+vidc.enc.target_support_bframe=1 \
+vendor.vidc.enc.disable_bframes=1 \
+vendor.vidc.dec.enable.downscalar=1
+
+# enable PQ feature by default
+PRODUCT_PROPERTY_OVERRIDES += \
+vendor.vidc.enc.disable.pq=false
+
+# Additional buffers shared between Camera and Video
+PRODUCT_PROPERTY_OVERRIDES += \
+vidc.enc.dcvs.extra-buff-count=2
+
+#Netflix custom property
+PRODUCT_PROPERTY_OVERRIDES += \
+ro.netflix.bsp_rev=Q660-13149-1
+
+#
+# system props for the data modules
+#
+PRODUCT_PROPERTY_OVERRIDES += \
+ro.use_data_netmgrd=true \
+persist.data.netmgrd.qos.enable=true \
+persist.data.mode=concurrent 
+
+#system props for time-services
+PRODUCT_PROPERTY_OVERRIDES += \
+persist.timed.enable=true
+
+# system property for maximum number of HFP client connections
+PRODUCT_PROPERTY_OVERRIDES += \
+bt.max.hfpclient.connections=1
+
+#force disable Bluetooth AAC by default
+PRODUCT_PROPERTY_OVERRIDES += \
+persist.bt.a2dp.aac_disable=true
+
+#
+# System props for telephony
+# System prop to turn on CdmaLTEPhone always
+PRODUCT_PROPERTY_OVERRIDES += \
+telephony.lteOnCdmaDevice=1
+
+#Simulate sdcard on /data/media
+#
+PRODUCT_PROPERTY_OVERRIDES += \
+persist.fuse_sdcard=true
+
+# System property for cabl
+PRODUCT_PROPERTY_OVERRIDES += \
+ro.qualcomm.cabl=0
+
+#
+#snapdragon value add features
+#
+PRODUCT_PROPERTY_OVERRIDES += \
+persist.rmnet.data.enable=true \
+persist.data.wda.enable=true \
+persist.data.df.dl_mode=5 \
+persist.data.df.ul_mode=5 \
+persist.data.df.agg.dl_pkt=10 \
+persist.data.df.agg.dl_size=4096 \
+persist.data.df.mux_count=8 \
+persist.data.df.iwlan_mux=9 \
+persist.data.df.dev_name=rmnet_usb0
+
+#
+# system property determining camera HAL to be used for a Video call
+#
+# 1 is camera1
+# 2 or anything else is camera2
+PRODUCT_PROPERTY_OVERRIDES += \
+persist.radio.VT_CAM_INTERFACE=2
+
+#property to enable user to access Google WFD settings
+PRODUCT_PROPERTY_OVERRIDES += \
+persist.debug.wfd.enable=1
+
+#Enable stm-events
+PRODUCT_PROPERTY_OVERRIDES += \
+persist.debug.coresight.config=stm-events
+
+##property to choose between virtual/external wfd display
+PRODUCT_PROPERTY_OVERRIDES += \
+persist.sys.wfd.virtual=0
+
+# system prop for NFC DT
+PRODUCT_PROPERTY_OVERRIDES += \
+ro.nfc.port=I2C
+
+#property for vendor specific library
+PRODUCT_PROPERTY_OVERRIDES += \
+ro.vendor.at_library=libqti-at.so
+
+#min/max cpu in core control
+PRODUCT_PROPERTY_OVERRIDES += \
+ro.vendor.qti.core_ctl_min_cpu=2 \
+ro.vendor.qti.core_ctl_max_cpu=4
+
+#property to enable VDS WFD solution
+PRODUCT_PROPERTY_OVERRIDES += \
+persist.hwc.enable_vds=1
+
+#Increase cached app limit
+PRODUCT_PROPERTY_OVERRIDES += \
+ro.vendor.qti.sys.fw.bg_apps_limit=60
+
+#Settings to enable sensors
+#Device Orientation sensor
+PRODUCT_PROPERTY_OVERRIDES += \
+ro.vendor.sensors.dev_ori=true
+
+#Persistent Motion Detector
+PRODUCT_PROPERTY_OVERRIDES += \
+ro.vendor.sensors.pmd=true
+
+#Stationary Detector
+PRODUCT_PROPERTY_OVERRIDES += \
+ro.vendor.sensors.sta_detect=true
+
+#Motion Detector
+PRODUCT_PROPERTY_OVERRIDES += \
+ro.vendor.sensors.mot_detect=true
+
+#disable UBWC for camera
+PRODUCT_PROPERTY_OVERRIDES += \
+persist.camera.preview.ubwc=0
+
+# Create zram disk
+PRODUCT_PROPERTY_OVERRIDES += \
+ro.vendor.qti.config.zram=true
+
+#Property to enable display default color mode
+PRODUCT_PROPERTY_OVERRIDES += \
+vendor.display.enable_default_color_mode=1
+
+# Property for backup NTP Server
+PRODUCT_PROPERTY_OVERRIDES += \
+persist.backup.ntpServer="0.pool.ntp.org"
+
+#Disable Skip Validate
+PRODUCT_PROPERTY_OVERRIDES += \
+sdm.debug.disable_skip_validate=1
+
 # Telephony
 PRODUCT_PACKAGES += \
     ims-ext-common \
